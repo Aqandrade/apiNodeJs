@@ -1,5 +1,17 @@
 const customExpress = require('./config/custom-express');
 
-const app = customExpress();
+const conexao = require('./infraestrutura/conexao');
 
-app.listen(3000,() => { console.log("Servidor iniciado na porta 3000") });
+conexao.connect((erro) => {
+    if(erro) {
+        
+        console.log(erro);
+        
+    } else {
+
+        const app = customExpress();
+
+        app.listen(3000,() => { console.log("Servidor iniciado na porta 3000") });
+
+    }
+});
