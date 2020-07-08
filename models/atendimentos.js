@@ -1,18 +1,24 @@
+const moment = require('moment');
 const conexao = require('../infraestrutura/conexao');
 
 class Atendimento {
-    adiciona(atendimento){
-        
-        const sql = "INSERT INTO Atendimentos SET ?";
+    adiciona(atendimento,res){
 
-        conexao.query(sql, atendimento, (erro,resultados) => {
+        const dataAgendamento = moment(atendimento.dataAgendamento,'DD/MM/YYYY hh:mm').format('YYYY-MM-DD hh:mm:ss');
+
+        const dataCriacao = moment().format('YYYY-MM-DD hh:mm:ss');
+
+        const atendimentoDatado = {...atendimento,dataAgendamento,dataCriacao};
+
+        const sql = 'INSERT INTO Atendimentos SET ?';
+
+        conexao.query(sql,atendimentoDatado,(erro,resultados) => {
             if(erro){
-                console.log(erro);
+                res.status(400).json(erro);
             } else {
-                console.log(resultados);
+                res.status(201).json(resultados)
             }
-            
-        })
+        });
     }
 }
 
