@@ -19,6 +19,12 @@ module.exports = app => {
         Atendimento.altera(id,valores,res);
     });
 
+    app.delete('/atendimentos/:id', (req,res) => {
+        const id = parseInt(req.params.id);
+
+        Atendimento.deleta(id,res);
+    });
+
     app.post('/atendimentos',(req,res) => {
         const atendimento = req.body;
 
